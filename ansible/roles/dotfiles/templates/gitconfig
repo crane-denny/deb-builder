@@ -1,0 +1,23 @@
+[user]
+	name = Florian Pelgrim
+	email = florian.pelgrim@craneworks.de
+	signingkey = B7200592
+[color]
+	ui = true
+	diff = true
+[core]
+	autocrlf = input
+	editor = vim
+	pager = less
+	excludesfile = ~/.gitignore
+[branch]
+	autosetuprebase = always
+[help]
+	autocorrect = 1
+[credential]
+	helper = cache
+[alias]
+	st = status -sb
+	fix-author = commit --amend --reset-author
+[push]
+	default = matching

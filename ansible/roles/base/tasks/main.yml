@@ -1,0 +1,9 @@
+- name: Installing base debian build tools from backports
+  apt:
+    name: "{{ item }}"
+    default_release: jessie-backports
+  with_items:
+    - git
+    - git-buildpackage
+    - autotools-dev
+    - quilt

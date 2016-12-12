@@ -1,0 +1,28 @@
+# reportbug preferences file
+# character encoding: UTF-8
+# Version of reportbug this preferences file was written by
+reportbug_version "6.6.3"
+# default operating mode: one of: novice, standard, advanced, expert
+mode advanced
+# default user interface
+ui text
+# offline setting - comment out to be online
+#offline
+# name and email setting (if non-default)
+realname "Florian Pelgrim"
+email "florian.pelgrim@craneworks.de"
+# Suppress user ID check for this user
+no-check-uid
+# Send all outgoing mail via the following host
+smtphost "srv1.he.craneworks.de"
+smtpuser "florian.pelgrim@craneworks.de"
+#smtppasswd "my password here"
+# Enable TLS for the SMTP host
+smtptls
+# If nothing else works, remove the # at the beginning
+# of the following three lines:
+#no-cc
+#header "X-Debbugs-CC: florian.pelgrim@craneworks.de"
+#smtphost reportbug.debian.org
+# You can add other settings after this line.  See
+# /etc/reportbug.conf for a full listing of options.

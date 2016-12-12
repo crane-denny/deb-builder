@@ -1,0 +1,96 @@
+- hosts: all
+  become: yes
+  pre_tasks:
+    - apt: update_cache=yes cache_valid_time=3600
+  roles:
+    - base
+    - dotfiles
+
+- hosts: all
+  name: pyroute2
+  tasks:
+    - name: Creating build folder
+      file:
+        path: "/home/vagrant/pyroute2"
+        state: directory
+
+    - name: Downloading repositorys
+      git:
+        repo: "git@github.com:craneworks/{{ item }}.git"
+        dest: "/home/vagrant/pyroute2/{{ item }}"
+        version: master
+        accept_hostkey: yes
+      with_items:
+        - pyroute2
+        - python-pyroute2
+
+    - name: Setting upstream repository
+      command: git remote add upstream https://github.com/svinota/pyroute2.git
+      args:
+        chdir: /home/vagrant/pyroute2/pyroute2
+      failed_when: false
+
+    - name: Fetching upstream
+      command: git fetch upstream
+      args:
+        chdir: /home/vagrant/pyroute2/pyroute2
+      register: upstream
+      changed_when: "'remote: Counting objects' in upstream.stdout"
+
+    - name: Tracking all branches
+      shell: "for remote in `git branch -r | grep -v /HEAD`; do git checkout --track $remote ; done"
+      args:
+        chdir: "/home/vagrant/pyroute2/{{ item }}"
+      with_items:
+        - pyroute2
+        - python-pyroute2
+      failed_when: false
+
+    - name: Downloading stable release
+      get_url:
+        url: "https://pypi.debian.net/pyroute2/pyroute2-{{ item }}.tar.gz"
+        dest: /home/vagrant/pyroute2
+      with_items:
+        - "0.4.11"
+
+- hosts: all
+  name: ipcalc
+  tasks:
+    - name: Creating build folder
+      file:
+        path: "/home/vagrant/ipcalc"
+        state: directory
+
+    - name: Downloading repositorys
+      git:
+        repo: "git@github.com:craneworks/{{ item }}.git"
+        dest: "/home/vagrant/ipcalc/{{ item }}"
+        version: master
+        accept_hostkey: yes
+      with_items:
+        - ipcalc
+        - python-ipcalc
+
+    - name: Setting upstream repository
+      command: git remote add upstream https://github.com/tehmaze/ipcalc.git
+      args:
+        chdir: /home/vagrant/ipcalc/ipcalc
+      register: upstream
+      changed_when: "'remote: Counting objects' in upstream.stdout"
+      failed_when: false
+
+    - name: Tracking all branches
+      shell: "for remote in `git branch -r | grep -v /HEAD`; do git checkout --track $remote ; done"
+      args:
+        chdir: "/home/vagrant/ipcalc/{{ item }}"
+      with_items:
+        - ipcalc
+        - python-ipcalc
+      failed_when: false
+
+    - name: Downloading stable release
+      get_url:
+        url: "https://pypi.debian.net/ipcalc/ipcalc-{{ item }}.tar.gz"
+        dest: /home/vagrant/ipcalc
+      with_items:
+        - "1.99.0"

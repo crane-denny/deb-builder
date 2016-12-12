@@ -1,0 +1,22 @@
+# Misc
+*.pyc
+*.swp
+
+# Vagrant
+.vagrant/*
+
+# PyCharm
+.idea/*
+
+# OpenOffice
+.~lock*
+
+# LaTex
+*.aux
+*.nav
+*.out
+*.snm
+*.synctex.gz
+*.toc
+*.log
+*.tex.bak

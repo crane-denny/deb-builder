@@ -1,0 +1,13 @@
+- name: Rendering dotfiles
+  template:
+    src: "{{ item }}"
+    dest: "/home/vagrant/.{{ item }}"
+    owner: vagrant
+    group: vagrant
+  with_items:
+    - bash_profile
+    - gitignore
+    - gitconfig
+    - vimrc
+    - quiltrc
+    - reportbugrc
